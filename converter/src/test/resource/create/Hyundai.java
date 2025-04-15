@@ -5,11 +5,19 @@ public class Hyundai extends HydrogenCar {
 	private String location;
 	private float stock;
 
-	public void addGasonlineCar(ElectricCar p0);
+	public void addGasonlineCar(ElectricCar p0) {
 
-	public GasonlineCar dropGasonlineCar();
+	}
 
-	public void addHydrongenCar();
+	public GasonlineCar dropGasonlineCar() {
 
-	public HydrogenCar dropHydrongenCar();
+	}
+
+	public void addHydrongenCar() {
+
+	}
+
+	public HydrogenCar dropHydrongenCar() {
+
+	}
 }

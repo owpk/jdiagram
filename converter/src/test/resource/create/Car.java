@@ -1,4 +1,5 @@
-public class Car {
+
+public abstract class Car implements Movable {
 
 	private int weight;
 	private int speed;
@@ -7,21 +8,26 @@ public class Car {
 	private static boolean lightOn;
 	public static final int DIRECTION = 7;
 
-	public void startEngine();
+	public abstract void startEngine();
 
-	public void stopEngine();
+	public abstract void stopEngine();
 
-	public void sideMirrorTurnOn();
+	public abstract void sideMirrorTurnOn();
 
-	public void sideMirrorTurnOff();
+	public abstract void sideMirrorTurnOff();
 
-	public int currentSpeed();
+	public abstract int currentSpeed();
 
-	public void accelerate();
+	public abstract void accelerate();
 
-	public void brake();
+	public abstract void brake();
 
-	public void turnRight();
+	public abstract void turnRight();
 
-	public void turnLeft();
+	public abstract void turnLeft();
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+	}
 }

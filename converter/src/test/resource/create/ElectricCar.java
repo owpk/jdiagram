@@ -1,6 +1,6 @@
-public class ElectricCar {
+public abstract class ElectricCar {
 
 	private int battery;
 
-	public void charging(int p0);
+	public abstract void charging(int p0);
 }
