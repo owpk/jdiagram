@@ -330,7 +330,6 @@ public class Extractor extends UserInput {
             addAttr(biggestBox, "id", Integer.toString(id++));
             root.appendChild(biggestBox);
 
-            int biggerBoxID = id;
             Element biggerBox = document.createElement("mxCell");
             addAttr(biggerBox, "id", Integer.toString(id++));
             addAttr(biggerBox, "parent", "0");

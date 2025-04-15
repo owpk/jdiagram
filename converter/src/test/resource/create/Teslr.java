@@ -1,4 +1,4 @@
-public class Teslr implements ElectricCar {
+public class Teslr extends ElectricCar {
 
 	private ArrayList<ElectricCar> electricCars;
 	private String location;

@@ -1,4 +1,4 @@
-public abstract class HydrogenCar {
+public abstract class HydrogenCar extends Car {
 
 	private int volume;
 

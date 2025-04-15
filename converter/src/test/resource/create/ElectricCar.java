@@ -1,4 +1,4 @@
-public abstract class ElectricCar {
+public abstract class ElectricCar extends Car {
 
 	private int battery;
 
