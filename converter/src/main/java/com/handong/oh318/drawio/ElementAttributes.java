@@ -1,4 +1,4 @@
-package com.handong.oh318.uml;
+package com.handong.oh318.drawio;
 
 import java.util.Arrays;
 import java.util.HashMap;

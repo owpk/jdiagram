@@ -27,7 +27,7 @@ public class ClassUml {
     @Singular("parent")
     private List<ClassUml> parent;
 
-    public String getUmlId() {
+    public String getClassIdentity() {
         return classId.toString();
     }
 

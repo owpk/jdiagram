@@ -1,6 +1,7 @@
 package com.handong.oh318;
 
 import com.handong.oh318.core.javaimpl.JavaSourceCodeExtractor;
+import com.handong.oh318.drawio.UmlDrawEngine;
 
 public class Main {
 
@@ -42,7 +43,10 @@ public class Main {
         System.out.println("DrawioPath: " + drawioPath);
         var extractor = new JavaSourceCodeExtractor(javaPath);
         var javaSource = extractor.extractSource();
-        javaSource.forEach(System.out::println);
+        // javaSource.forEach(System.out::println);
+
+        var drawio = new UmlDrawEngine(extractor, drawioPath);
+        drawio.createDrawio();
 
         // Extractor
         // if (args[2].equals("0")) {

@@ -49,7 +49,7 @@ public abstract class AbsJavaExtractor extends AbsExtractor {
         } else {
             throw new IllegalArgumentException("Unsupported Java type: " + javaType.getClass());
         }
-        sourceEntries.put(result.getUmlId(), result);
+        sourceEntries.put(result.getClassIdentity(), result);
         return result;
     }
 

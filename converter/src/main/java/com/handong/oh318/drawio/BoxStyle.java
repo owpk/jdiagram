@@ -1,7 +1,8 @@
-package com.handong.oh318.uml;
+package com.handong.oh318.drawio;
 
 import java.util.Map;
 
+import com.handong.oh318.model.ClassType;
 import com.handong.oh318.model.Visibility;
 
 import lombok.Builder;
@@ -21,7 +22,10 @@ public class BoxStyle {
                 .fontFamily("Arial")
                 .fontColor("black")
                 .borderRadius("0px")
-                .visibilityIcons(Map.of(Visibility.PRIVATE, "- ", Visibility.PROTECTED, "# ", Visibility.PUBLIC, "+ "));
+                .margin(10)
+                .visibilityIcons(Map.of(Visibility.PRIVATE, "- ", Visibility.PROTECTED, "# ", Visibility.PUBLIC, "+ "))
+                .classTypeIcons(Map.of(ClassType.ABSTRACT_CLASS, "(A) ", ClassType.CLASS, "(C) ", ClassType.ENUM,
+                        "(E) ", ClassType.INTERFACE, "(I) "));
     }
 
     private String bgColor;
@@ -34,4 +38,6 @@ public class BoxStyle {
     private boolean isBorderRounded;
     private String borderRadius;
     private Map<Visibility, String> visibilityIcons;
+    private Map<ClassType, String> classTypeIcons;
+    public int margin;
 }
