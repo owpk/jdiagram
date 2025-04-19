@@ -192,4 +192,9 @@ public class DefaultElementRegistry implements XmlElementRegistry {
         root.appendChild(lines);
         return new ElementEntry(lines, line);
     }
+
+    @Override
+    public UmlElement getByUmlId(String parentId) {
+        return elements.get(parentId).umlElement();
+    }
 }

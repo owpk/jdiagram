@@ -1,5 +1,5 @@
 
-public abstract class Car implements Movable {
+public abstract class Car implements Movable, Flexible {
 
 	private int weight;
 	private int speed;

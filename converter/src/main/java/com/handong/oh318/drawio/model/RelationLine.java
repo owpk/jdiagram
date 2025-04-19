@@ -20,9 +20,11 @@ public class RelationLine extends UmlElement {
         this.target = target;
         this.value = type == 1 ? "extends" : "";
         this.lineAttr = new ElementAttributes(switch (type) {
-            case 0 -> "line;endArrow=block;endFill=0;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;";
             case 1 -> "endArrow=block;endSize=16;endFill=0;html=1";
-            default -> "endArrow=block;";
+            case 0 -> "endArrow=block;";
+            default -> "";
         });
+        this.lineAttr.addAttribute("edgeStyle", "orthogonalEdgeStyle");
+        this.lineAttr.addAttribute("jumpStyle", "arc");
     }
 }

@@ -3,11 +3,10 @@ package com.handong.oh318.drawio;
 import static com.handong.oh318.drawio.Utils.addAttr;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -31,9 +30,10 @@ public class UmlDrawEngine extends UserInput {
     private String drawioPath; // drawio path that .drawio file will be created
 
     private List<ClassUml> classBoxes;
-    private Map<String, UmlRelations> cache = new HashMap<>();
 
     private XmlElementRegistry xmlElementRegistry;
+
+    private Map<String, List<String>> parentToChildRelations = new HashMap<>();
 
     private Document document;
     private Element root;
@@ -41,9 +41,8 @@ public class UmlDrawEngine extends UserInput {
 
     private int maxHeight;
     private int maxWidth;
-
-    private static record UmlRelations(String umlId, Set<String> relations) {
-    }
+    private int x = 100;
+    private int y = 100;
 
     public UmlDrawEngine(SourceCodeExtractor sourceCodeExtractor, String drawioPath) {
         this.classBoxes = sourceCodeExtractor.extractSource();
@@ -75,15 +74,17 @@ public class UmlDrawEngine extends UserInput {
         addAttr(biggerBox, "parent", "a_0");
         root.appendChild(biggerBox);
 
-        int x = 100;
-        int y = 100;
-
         iterateOverClasses(classBoxes);
 
-        for (var classBox : classBoxes) {
-            var entry = xmlElementRegistry.createClassBox(classBox, x, y);
-            x += entry.umlElement().width;
-            y += entry.umlElement().height;
+        System.out.println("parentToChildRelations: " + parentToChildRelations);
+
+        for (var entry : parentToChildRelations.entrySet()) {
+            var parentId = entry.getKey();
+            var childIds = entry.getValue();
+
+            for (var childId : childIds) {
+                xmlElementRegistry.createLine(0, parentId, childId);
+            }
         }
 
         // transform the DOM Object to an XML File
@@ -91,33 +92,32 @@ public class UmlDrawEngine extends UserInput {
     }
 
     private void iterateOverClasses(List<ClassUml> classUmls) {
+        Map<String, ElementEntry> visited = new HashMap<>();
         for (var uml : classUmls) {
-            iterateOverElement(uml, null);
+            iterateOverElement(uml, visited);
         }
     }
 
-    private void iterateOverElement(ClassUml classUml, String parentClassRelationId) {
+    private void iterateOverElement(ClassUml classUml, Map<String, ElementEntry> visited) {
+        var childXml = createClassBox(classUml, visited, x, y);
+        x += childXml.umlElement().width + 50;
+        y += childXml.umlElement().height + 50;
 
-        var classIdentity = classUml.getClassIdentity();
+        var parents = classUml.getParent();
+        for (var parent : parents) {
+            var parentXml = createClassBox(parent, visited, x, y);
+            x += parentXml.umlElement().width + 50;
+            y += parentXml.umlElement().height + 50;
 
-        String umlIdCurrent = null;
-        if (!cache.containsKey(classIdentity)) {
-            var current = xmlElementRegistry.createClassBox(classUml, 0, 0);
-            umlIdCurrent = current.umlElement().umlId;
-            cache.put(classIdentity, new UmlRelations(umlIdCurrent, new HashSet<>()));
-        } else {
-            umlIdCurrent = cache.get(classIdentity).umlId;
+            parentToChildRelations
+                    .computeIfAbsent(childXml.umlElement().umlId, k -> new ArrayList<>())
+                    .add(parentXml.umlElement().umlId);
         }
+    }
 
-        if (parentClassRelationId != null && cache.containsKey(parentClassRelationId)) {
-            var relations = cache.get(parentClassRelationId).relations();
-            relations.add(umlIdCurrent);
-        }
-
-        var parent = classUml.getParent();
-        for (var p : parent) {
-            iterateOverElement(p, classIdentity);
-        }
+    private ElementEntry createClassBox(ClassUml classUml, Map<String, ElementEntry> visited, int x, int y) {
+        return visited.computeIfAbsent(classUml.getClassIdentity(),
+                n -> xmlElementRegistry.createClassBox(classUml, x, y));
     }
 
     private void writeeXMLFile(String drawioPath) {

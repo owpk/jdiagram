@@ -36,7 +36,7 @@ public class Main {
     // }
 
     public static void main(String[] args) {
-        String javaPath = "/home/user/gh/jdiagram/converter/src/test/resource/create";
+        String javaPath = "/Users/slavavorobev/gh/jdiagram/converter/src/test/resource/create";
         String drawioPath = "./jd.drawio";
 
         System.out.println("Java Path: " + javaPath);

@@ -1,3 +1,3 @@
-public interface Movable extends Flexible {
+public interface Movable {
     void move();
 }

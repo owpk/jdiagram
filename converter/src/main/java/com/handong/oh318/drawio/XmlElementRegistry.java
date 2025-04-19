@@ -13,4 +13,6 @@ public interface XmlElementRegistry {
     ElementEntry createClassBox(ClassUml classUml, int x, int y);
 
     ElementEntry createLine(int value, String sourceId, String targetId);
+
+    UmlElement getByUmlId(String parentId);
 }
